@@ -84,7 +84,7 @@ int main(int argc, char** argv)
             }
             func->second(source);
         }
-        catch (std::invalid_argument)
+        catch (...)
         {
             std::cout << "<INVALID COMMAND>" << '\n';
         }
