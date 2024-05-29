@@ -7,6 +7,7 @@
 #include "FrequencyDict.h"
 namespace melnikov
 {
+    void commandWork(std::istream & in, std::ostream & out, FrequencyDict& src);
     void count(std::istream & in, std::ostream & out, FrequencyDict& src);
     void print(std::istream & in, std::ostream & out, FrequencyDict& src);
     void deleteCommand(std::istream & in, std::ostream & out, FrequencyDict& src);

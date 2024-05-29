@@ -9,7 +9,7 @@ namespace melnikov
         std::map< std::string, size_t> dict_;
         std::map< std::string, size_t>::iterator find(const std::string& arg);
     public:
-        void print(std::istream & in, std::ostream & out, const std::string& arg);
+        void print(std::ostream & out, const std::string& arg);
         size_t countHelp(const std::string& word);
         void insert(const std::string& key);
         std::pair< std::string, size_t >

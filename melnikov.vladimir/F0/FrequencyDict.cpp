@@ -49,7 +49,7 @@ size_t melnikov::FrequencyDict::countHelp(const std::string &word) {
     }
 }
 
-void melnikov::FrequencyDict::print(std::istream &in, std::ostream &out, const std::string& arg) {
+void melnikov::FrequencyDict::print(std::ostream &out, const std::string& arg) {
     if (dict_.empty())
     {
         throw std::invalid_argument(EMPTY_DICT);
