@@ -11,7 +11,7 @@ void melnikov::FrequencyDict::insert(std::string key, size_t value) {
                    [](unsigned char c){ return std::tolower(c); });
     if (dict.find(key) != dict.end())
     {
-        dict.find(key) ->second+= value;
+        dict.find(key) -> second+= value;
     }
     else
     {
@@ -19,7 +19,7 @@ void melnikov::FrequencyDict::insert(std::string key, size_t value) {
     }
 }
 
-std::_Rb_tree_iterator<std::pair<const std::basic_string<char>, unsigned long long int>>
+std::_Rb_tree_iterator<std::pair<const std::basic_string<char>, size_t>>
 melnikov::FrequencyDict::find(std::string &arg) {
     std::transform(arg.begin(), arg.end(), arg.begin(),
                    [](unsigned char c){ return std::tolower(c); });

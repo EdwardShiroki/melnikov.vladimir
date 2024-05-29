@@ -7,7 +7,7 @@ namespace melnikov
     struct FrequencyDict {
         std::map< std::string, size_t> dict;
         std::_Rb_tree_iterator<std::pair<const std::basic_string<char>,
-        unsigned long long int>> find(std::string& arg);
+        size_t>> find(std::string& arg);
         void insert(std::string key, size_t value = 1);
     };
     std::ostream &operator <<(std::ostream &out, const std::pair< std::string, size_t >& word );
