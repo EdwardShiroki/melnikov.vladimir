@@ -1,7 +1,6 @@
 #include "Commands.h"
 #include "WordInput.h"
 #include <algorithm>
-#include <limits>
 
 namespace  melnikov
 {

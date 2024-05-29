@@ -7,6 +7,8 @@
 #include "WordInput.h"
 #include "Commands.h"
 #include <limits>
+#include <vector>
+#include <algorithm>
 int main(int argc, char** argv)
 {
     using namespace melnikov;
