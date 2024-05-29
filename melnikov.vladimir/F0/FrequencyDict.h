@@ -4,13 +4,27 @@
 #include <map>
 namespace melnikov
 {
-    struct FrequencyDict {
-        std::map< std::string, size_t> dict;
-        std::_Rb_tree_iterator<std::pair<const std::basic_string<char>,
-        size_t>> find(std::string& arg);
-        void insert(std::string key, size_t value = 1);
+    class FrequencyDict {
+    private:
+        std::map< std::string, size_t> dict_;
+        std::map< std::string, size_t>::iterator find(const std::string& arg);
+    public:
+        void print(std::istream & in, std::ostream & out);
+        size_t countHelp(const std::string& word);
+        void insert(const std::string& key);
+        std::pair< std::string, size_t >
+        deleteHelp(const std::string& arg1,const std::string& arg2);
+        std::pair< std::string, size_t > mostFrequent();
+        std::pair< std::string, size_t > leastFrequent();
+        size_t byLetter(const char & letter);
+        size_t compMore(size_t frequency);
+        size_t compLess(size_t frequency);
     };
     std::ostream &operator <<(std::ostream &out, const std::pair< std::string, size_t >& word );
+    bool isValidWord(const std::string & word);
+    std::string wordToLower(const std::string& word);
+    bool comparedFreq(const std::pair< std::string, size_t >& word1,
+                      const std::pair< std::string, size_t >& word2);
 }
 
 

@@ -9,6 +9,7 @@
 #include <limits>
 #include <vector>
 #include <algorithm>
+const std::string INVALID_COMMAND = "<INVALID COMMAND>\n";
 int main(int argc, char** argv)
 {
     using namespace melnikov;
@@ -24,7 +25,7 @@ int main(int argc, char** argv)
     FrequencyDict source;
     auto t = std::istream_iterator< WordInput >();
     std::map < std::string, std::function <
-            void (FrequencyDict& dictionary)>> command;
+            void (std::istream &in, std::ostream &out, FrequencyDict& dictionary)>> command;
     std::string toParse;
     std::vector < WordInput > words;
     command["PRINT"] = print;
@@ -35,7 +36,6 @@ int main(int argc, char** argv)
     command["BYLETTER"] = byLetter;
     command["COMPARE_LESS"] = compLess;
     command["COMPARE_MORE"] = compMore;
-    command["INSERT"] = insertComm;
     while (!input.eof())
     {
         std::copy(
@@ -58,11 +58,10 @@ int main(int argc, char** argv)
                  "DELETE [WORD] [FULL| num-of-words] - удаление слова "
                  "из словаря полностью или кол-во его вхождений\n"
                  "MOST_FREQUENT - самое частое слово\n"
-                 "LESS_FREQUENT - самое редкое слово\n"
+                 "LEAST_FREQUENT - самое редкое слово\n"
                  "BY_LETTER [CHAR]- кол-во слов на букву\n"
                  "COMPARE_MORE [num] - кол-во слов, встречающихся чаще, чем значение аргумента\n"
-                 "COMPARE_LESS [num] - кол-во слов, встречающихся реже, чем значение аргумента\n"
-                 "INSERT [WORD] [num] - вставить слово со значением, увеличить значение на число\n";
+                 "COMPARE_LESS [num] - кол-во слов, встречающихся реже, чем значение аргумента\n";
     std::string cmd;
     while (!std::cin.eof())
     {
@@ -80,13 +79,13 @@ int main(int argc, char** argv)
             auto func = command.find(cmd);
             if (func == command.end()) {
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                throw std::invalid_argument("");
+                throw std::invalid_argument(INVALID_COMMAND);
             }
-            func->second(source);
+            func->second(std::cin, std::cout, source);
         }
-        catch (...)
+        catch (std::invalid_argument& e)
         {
-            std::cout << "<INVALID COMMAND>" << '\n';
+            std::cout << e.what();
         }
     }
 

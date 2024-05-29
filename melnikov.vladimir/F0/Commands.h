@@ -7,17 +7,14 @@
 #include "FrequencyDict.h"
 namespace melnikov
 {
-    void print(const FrequencyDict& src);
-    void count(FrequencyDict& src);
-    void deleteCommand(FrequencyDict& src);
-    void mostFrequent(FrequencyDict& src);
-    void leastFrequent(FrequencyDict& src);
-    bool comparedFreq(const std::pair< std::string, size_t >& word1,
-                      const std::pair< std::string, size_t >& word2);
-    void byLetter(FrequencyDict& src);
-    void compLess(FrequencyDict& src);
-    void compMore(FrequencyDict& src);
-    void insertComm(FrequencyDict& src);
+    void count(std::istream & in, std::ostream & out, FrequencyDict& src);
+    void print(std::istream & in, std::ostream & out, FrequencyDict& src);
+    void deleteCommand(std::istream & in, std::ostream & out, FrequencyDict& src);
+    void mostFrequent(std::istream & in, std::ostream & out, FrequencyDict& src);
+    void leastFrequent(std::istream & in, std::ostream & out, FrequencyDict& src);
+    void byLetter(std::istream & in, std::ostream & out, FrequencyDict& src);
+    void compLess(std::istream & in, std::ostream & out, FrequencyDict& src);
+    void compMore(std::istream & in, std::ostream & out, FrequencyDict& src);
 }
 
 #endif //COURSE_PROJECT_COMMANDS_H
