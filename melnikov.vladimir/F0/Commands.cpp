@@ -13,7 +13,9 @@ namespace  melnikov
 
     void print(std::istream & in, std::ostream & out, FrequencyDict& src)
     {
-        src.print(in, out);
+        std::string arg;
+        in >> arg;
+        src.print(in, out, arg);
     }
     void deleteCommand(std::istream & in, std::ostream & out, FrequencyDict& src)
     {
@@ -24,14 +26,11 @@ namespace  melnikov
         out << src.deleteHelp(arg1, arg2);
     }
 
-    void mostFrequent(std::istream & in, std::ostream & out, FrequencyDict& src)
+    void frequent(std::istream & in, std::ostream & out, FrequencyDict& src)
     {
-        out << src.mostFrequent();
-    }
-
-    void leastFrequent(std::istream & in, std::ostream & out, FrequencyDict& src)
-    {
-        out << src.leastFrequent();
+        std::string arg;
+        in >> arg;
+        out << src.frequent(arg);
     }
     void byLetter(std::istream & in, std::ostream & out, FrequencyDict& src)
     {

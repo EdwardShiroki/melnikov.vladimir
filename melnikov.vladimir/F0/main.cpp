@@ -31,8 +31,7 @@ int main(int argc, char** argv)
     command["PRINT"] = print;
     command["COUNT"] = count;
     command["DELETE"] = deleteCommand;
-    command["MOST_FREQUENT"] = mostFrequent;
-    command["LEAST_FREQUENT"] = leastFrequent;
+    command["FREQUENT"] = frequent;
     command["BYLETTER"] = byLetter;
     command["COMPARE_LESS"] = compLess;
     command["COMPARE_MORE"] = compMore;
@@ -53,12 +52,11 @@ int main(int argc, char** argv)
                         }
                   });
     std::cout << "Доступные команды:\n"
-                 "PRINT - вывод словаря\n"
+                 "PRINT [ALL | Letter] - вывод словаря (всего или слов начинающихся на букву)\n"
                  "COUNT [WORD] - кол-во вхождений слова\n"
                  "DELETE [WORD] [FULL| num-of-words] - удаление слова "
                  "из словаря полностью или кол-во его вхождений\n"
-                 "MOST_FREQUENT - самое частое слово\n"
-                 "LEAST_FREQUENT - самое редкое слово\n"
+                 "FREQUENT [MOST | LEAST] - самое частое слово\n"
                  "BY_LETTER [CHAR]- кол-во слов на букву\n"
                  "COMPARE_MORE [num] - кол-во слов, встречающихся чаще, чем значение аргумента\n"
                  "COMPARE_LESS [num] - кол-во слов, встречающихся реже, чем значение аргумента\n";
@@ -88,7 +86,6 @@ int main(int argc, char** argv)
             std::cout << e.what();
         }
     }
-
     return 0;
 }
 

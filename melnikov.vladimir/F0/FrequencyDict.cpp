@@ -1,12 +1,12 @@
-//
-// Created by vladi on 5/14/2024.
-//
-
 #include "FrequencyDict.h"
 #include <algorithm>
+#include <iterator>
+
 const std::string INVALID_WORD = "Invalid word format.\n";
 const std::string EMPTY_DICT = "Empty dictionary.\n";
-
+const std::string ERROR_DELETE = "Error. Trying to delete too much.\n";
+const std::string DELETE_NOT_FOUND = "Error. Word to delete is not found in text.\n";
+const std::string INVALID_ARGUMENT = "Invalid command argument.\n";
 void melnikov::FrequencyDict::insert(const std::string& key) {
     auto insertWord = wordToLower(key);
     if (dict_.find(insertWord) != dict_.end())
@@ -49,16 +49,34 @@ size_t melnikov::FrequencyDict::countHelp(const std::string &word) {
     }
 }
 
-void melnikov::FrequencyDict::print(std::istream &in, std::ostream &out) {
+void melnikov::FrequencyDict::print(std::istream &in, std::ostream &out, const std::string& arg) {
     if (dict_.empty())
     {
         throw std::invalid_argument(EMPTY_DICT);
     }
-    std::for_each(dict_.begin(), dict_.end(),
-                  [&out](const std::pair< std::string, size_t >& word)
-                  {
-                        out << word;
-                  });
+    if (arg == "ALL")
+    {
+        std::for_each(dict_.begin(), dict_.end(),
+                      [&out](const std::pair< std::string, size_t >& word)
+                      {
+                          out << word;
+                      });
+    }
+    else if (arg.size() == 1)
+    {
+        std::for_each(dict_.begin(), dict_.end(),
+                      [&out, arg](const std::pair< std::string, size_t >& word)
+                      {
+                            if(word.first[0] == std::tolower(arg[0]))
+                            {
+                                out << word;
+                            }
+                      });
+    }
+    else
+    {
+        throw std::invalid_argument(INVALID_ARGUMENT);
+    }
 }
 
 std::pair<std::string, size_t> melnikov::FrequencyDict::deleteHelp(const std::string &arg1,const std::string &arg2) {
@@ -75,15 +93,15 @@ std::pair<std::string, size_t> melnikov::FrequencyDict::deleteHelp(const std::st
     {
         if (arg2 == "FULL")
         {
-            dict_.erase(arg1);
-            return {arg1, 0};
+            dict_.erase(wordToLower(arg1));
+            return {wordToLower(arg1), 0};
         }
         else
         {
             size_t delCount = std::stoull(arg2);
             if (findIter->second <= delCount)
             {
-                throw std::invalid_argument("");
+                throw std::invalid_argument(ERROR_DELETE);
             }
             else
             {
@@ -94,32 +112,35 @@ std::pair<std::string, size_t> melnikov::FrequencyDict::deleteHelp(const std::st
     }
     else
     {
-        throw std::invalid_argument("");
+        throw std::invalid_argument(DELETE_NOT_FOUND);
     }
 }
 
-std::pair<std::string, size_t> melnikov::FrequencyDict::mostFrequent() {
+std::pair<std::string, size_t> melnikov::FrequencyDict::frequent(const std::string& arg) {
     if (dict_.empty())
     {
         throw std::invalid_argument(EMPTY_DICT);
     }
-    auto maxEl = std::max_element(dict_.begin(), dict_.end(), comparedFreq);
-    return *maxEl;
-}
-
-std::pair<std::string, size_t> melnikov::FrequencyDict::leastFrequent() {
-    if (dict_.empty())
+    if (arg == "MOST")
     {
-        throw std::invalid_argument(EMPTY_DICT);
+        auto maxEl = std::max_element(dict_.begin(), dict_.end(), comparedFreq);
+        return *maxEl;
     }
-    auto minEl = std::min_element(dict_.begin(), dict_.end(), comparedFreq);
-    return *minEl;
+    else if (arg == "LEAST")
+    {
+        auto minEl = std::min_element(dict_.begin(), dict_.end(), comparedFreq);
+        return *minEl;
+    }
+    else
+    {
+        throw std::invalid_argument(INVALID_ARGUMENT);
+    }
 }
 
 size_t melnikov::FrequencyDict::byLetter(const char &letter) {
     if (!iswalpha(letter))
     {
-        throw std::invalid_argument("");
+        throw std::invalid_argument(INVALID_ARGUMENT);
     }
     if (dict_.empty())
     {
@@ -161,6 +182,11 @@ size_t melnikov::FrequencyDict::compLess(size_t frequency) {
 
 std::ostream &melnikov::operator <<(std::ostream &out, const std::pair< std::string, size_t >& word)
 {
+    std::ostream::sentry sentry(out);
+    if (!sentry)
+    {
+        return out;
+    }
      out << word.first << " " << word.second << '\n';
      return out;
 }
