@@ -19,23 +19,7 @@ int main(int argc, char** argv)
         return 1;
     }
     FrequencyDict source;
-    std::vector < WordInput > words;
-    while (!input.eof())
-    {
-        std::copy(
-                std::istream_iterator< WordInput >(input),
-                std::istream_iterator< WordInput >(),
-                std::back_inserter(words)
-        );
-    }
-    std::for_each(words.begin(), words.end(),
-                  [&source](const WordInput& key)
-                  {
-                        if (isValidWord(key.word))
-                        {
-                            source.insert(key.word);
-                        }
-                  });
+    input >> source;
     commandWork(std::cin, std::cout, source);
     return 0;
 }

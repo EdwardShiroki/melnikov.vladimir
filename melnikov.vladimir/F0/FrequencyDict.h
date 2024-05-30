@@ -19,9 +19,8 @@ namespace melnikov
         size_t compMore(size_t frequency);
         size_t compLess(size_t frequency);
     };
+    std::istream &operator >>(std::istream& in, FrequencyDict& dest);
     std::ostream &operator <<(std::ostream &out, const std::pair< std::string, size_t >& word );
-    bool isValidWord(const std::string & word);
-    std::string wordToLower(const std::string& word);
     bool comparedFreq(const std::pair< std::string, size_t >& word1,
                       const std::pair< std::string, size_t >& word2);
 }

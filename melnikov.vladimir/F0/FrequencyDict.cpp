@@ -1,7 +1,7 @@
 #include "FrequencyDict.h"
 #include <algorithm>
 #include <iterator>
-
+#include "WordInput.h"
 const std::string INVALID_WORD = "Invalid word format.\n";
 const std::string EMPTY_DICT = "Empty dictionary.\n";
 const std::string ERROR_DELETE = "Error. Trying to delete too much.\n";
@@ -178,6 +178,18 @@ size_t melnikov::FrequencyDict::compLess(size_t frequency) {
                                    return word.second < frequency;
                                });
     return count;
+}
+
+std::istream &melnikov::operator>>(std::istream &in, melnikov::FrequencyDict& dest) {
+    WordInput wordStruct;
+    while (in >> wordStruct)
+    {
+        if (isValidWord(wordStruct.word))
+        {
+            dest.insert(wordStruct.word);
+        }
+    }
+    return in;
 }
 
 std::ostream &melnikov::operator <<(std::ostream &out, const std::pair< std::string, size_t >& word)
